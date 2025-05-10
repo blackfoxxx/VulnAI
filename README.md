@@ -123,6 +123,3 @@ VulnLearnAI/
 - Integration with more security tools
 - Enhanced ML model training options
 
-## License
-
-MIT License - feel free to use and modify as needed.
