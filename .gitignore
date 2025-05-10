@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# C extensions
+*.egg-info/
+
+# Virtual environment
+venv/
+env/
+
+# Distribution / packaging
+.eggs/
+dist/
+build/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environment variables and secret configurations
+.env
+
+# System files
+.DS_Store
+
+# Log files and model directories (if you do not wish to version control large binary assets)
+data/logs/
+data/model/

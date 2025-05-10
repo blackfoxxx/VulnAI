@@ -1,0 +1,29 @@
+{
+    "sqlmap": {
+        "name": "SQLMap",
+        "description": "Automatic SQL injection and database takeover tool",
+        "git_repo_url": "https://github.com/sqlmapproject/sqlmap.git",
+        "install_commands": [
+            "python3 -m pip install -r requirements.txt"
+        ],
+        "category": "web_security"
+    },
+    "ffuf": {
+        "name": "FFUF",
+        "description": "Fast web fuzzer written in Go",
+        "git_repo_url": "https://github.com/ffuf/ffuf.git",
+        "install_commands": [
+            "go build"
+        ],
+        "category": "web_security"
+    },
+    "dirsearch": {
+        "name": "Dirsearch",
+        "description": "Web path scanner",
+        "git_repo_url": "https://github.com/maurosoria/dirsearch.git",
+        "install_commands": [
+            "python3 -m pip install -r requirements.txt"
+        ],
+        "category": "web_security"
+    }
+}

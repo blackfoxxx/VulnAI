@@ -1,0 +1,34 @@
+[
+    {
+        "title": "SQL Injection in Login Form",
+        "description": "A critical SQL injection vulnerability was discovered in the application's login form. The username field is vulnerable to SQL injection attacks, allowing attackers to bypass authentication and potentially extract sensitive data from the database. The vulnerability is caused by improper input validation and direct concatenation of user input into SQL queries.",
+        "writeup_links": [],
+        "cves": [
+            "CVE-2023-12345"
+        ],
+        "metadata": {},
+        "timestamp": "2024-05-08T19:55:00Z"
+    },
+    {
+        "title": "Hack The Box \u2014 Jerry Write-up",
+        "description": "Hack The Box \u2014 Jerry Write-up\n",
+        "writeup_links": [
+            "https://medium.com/ctf-writeups/hack-the-box-jerry-write-up-6f045601315f"
+        ],
+        "cves": [],
+        "metadata": {},
+        "timestamp": "2025-05-08T23:03:21.698Z"
+    },
+    {
+        "title": "Training Data from URL: https://medium.com/ctf-writeups/hack-the-box-jerry-write-up-6f045601315f",
+        "description": "The write-up details the exploitation of the 'Jerry' box on Hack The Box, which runs on Windows with the IP 10.10.10.95 and Apache Tomcat on port 8080. The initial step involved using default credentials ('tomcat' and 's3cret') to access the Manager App, which allows for the upload of a WAR file. An authenticated RCE was achieved using the Metasploit module `multi/http/tomcat_mgr_upload`, leading to immediate system access. The author found both flags needed for submission in a directory on the Administrator's desktop. The overall difficulty of the box is rated as \"Piece of cake,\" making it an accessible challenge for beginners.",
+        "writeup_links": [
+            "https://medium.com/ctf-writeups/hack-the-box-jerry-write-up-6f045601315f"
+        ],
+        "cves": [],
+        "metadata": {
+            "source": "URL Summarization"
+        },
+        "timestamp": "2025-05-10T13:43:40.415417"
+    }
+]

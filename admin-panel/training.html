@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VulnLearnAI Model Training</title>
+  <link href="https://cdn.tailwindcss.com" rel="stylesheet" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <nav class="bg-blue-900 p-4 shadow-md">
+    <div class="container mx-auto flex items-center justify-between">
+      <a href="/admin" class="text-white font-bold text-xl">VulnLearnAI Training</a>
+      <div>
+        <a href="/admin" class="text-blue-300 hover:text-white px-3">Dashboard</a>
+        <a href="/chat" class="text-blue-300 hover:text-white px-3">Chat</a>
+        <a href="/admin/tools.html" class="text-blue-300 hover:text-white px-3">Tools</a>
+        <a href="/admin/analysis.html" class="text-blue-300 hover:text-white px-3">Analysis</a>
+        <a href="/admin" class="text-blue-300 hover:text-white px-3">Admin Panel</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mx-auto mt-8 p-4 max-w-4xl">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">Model Training</h1>
+      <div id="model-status" class="text-sm text-gray-600"></div>
+    </div>
+
+    <!-- URL Input and Summary Section -->
+    <section class="bg-white rounded-lg shadow-lg p-6 mb-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Add Training Data via URL</h2>
+      <div class="mb-4">
+        <label for="urlInput" class="block text-sm font-medium text-gray-700 mb-2">Enter URL to Summarize</label>
+        <div class="flex gap-2">
+          <input type="url" id="urlInput" value="" placeholder="https://example.com/article" 
+                 class="flex-1 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+          <button id="summarizeBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2">
+            <i class="fas fa-magic"></i>
+            <span>Summarize</span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Summary Display Section (Hidden by default) -->
+      <div id="summarySection" class="mt-6 hidden">
+        <h3 class="text-lg font-semibold mb-2">Generated Summary</h3>
+        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+          <p id="summaryText" class="text-gray-800 whitespace-pre-line"></p>
+        </div>
+        <div class="flex justify-end">
+          <button id="confirmBtn" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors duration-200 flex items-center space-x-2">
+            <i class="fas fa-check"></i>
+            <span>Use as Training Data</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Training Status Card -->
+    <section class="bg-white rounded-lg shadow-lg p-6 mb-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold text-gray-800">Model Status</h2>
+        <span id="last-trained" class="text-sm text-gray-600"></span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="text-sm font-medium text-gray-600 mb-2">Training Samples</h3>
+          <p id="training-samples" class="text-2xl font-bold text-gray-900">-</p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="text-sm font-medium text-gray-600 mb-2">Validation Accuracy</h3>
+          <p id="validation-accuracy" class="text-2xl font-bold text-gray-900">-</p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="text-sm font-medium text-gray-600 mb-2">Model Status</h3>
+          <p id="model-loaded" class="text-2xl font-bold text-gray-900">-</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Training Control Card -->
+    <section class="bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Train AI Models</h2>
+      <p class="mb-6 text-gray-600">
+        Use this interface to train and evaluate AI models for vulnerability classification. 
+        The model will be trained using the available training data and validated for accuracy.
+      </p>
+      <div class="flex items-center space-x-4">
+        <button id="train-btn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
+          <i class="fas fa-brain"></i>
+          <span>Start Training</span>
+        </button>
+        <!-- Spinner -->
+        <div id="spinner" class="hidden">
+          <i class="fas fa-circle-notch fa-spin text-blue-600 text-xl"></i>
+        </div>
+      </div>
+      <!-- Status Messages -->
+      <div id="training-status" class="mt-4 p-4 rounded-lg hidden">
+        <p class="text-gray-700"></p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const trainBtn = document.getElementById('train-btn');
+    const statusDiv = document.getElementById('training-status');
+    const spinner = document.getElementById('spinner');
+    const modelStatus = document.getElementById('model-status');
+    const lastTrained = document.getElementById('last-trained');
+    const trainingSamples = document.getElementById('training-samples');
+    const validationAccuracy = document.getElementById('validation-accuracy');
+    const modelLoaded = document.getElementById('model-loaded');
+
+    // URL Summarization Elements
+    const urlInput = document.getElementById('urlInput');
+    const summarizeBtn = document.getElementById('summarizeBtn');
+    const summarySection = document.getElementById('summarySection');
+    const summaryText = document.getElementById('summaryText');
+    const confirmBtn = document.getElementById('confirmBtn');
+
+    // Function to format date
+    function formatDate(dateString) {
+      return new Date(dateString).toLocaleString();
+    }
+
+    // Function to show status message
+    function showStatus(message, type = 'info') {
+      statusDiv.classList.remove('hidden', 'bg-green-50', 'bg-red-50');
+      statusDiv.classList.add(type === 'error' ? 'bg-red-50' : 'bg-green-50');
+      statusDiv.querySelector('p').textContent = message;
+      statusDiv.classList.remove('hidden');
+    }
+
+    // Function to update model status
+    async function updateModelStatus() {
+      try {
+        const response = await fetch('/api/admin/model-status', {
+          headers: {
+            'x-admin-token': 'default_admin_token'
+          }
+        });
+        const data = await response.json();
+        
+        if (data.model_status.last_training) {
+          const training = data.model_status.last_training;
+          trainingSamples.textContent = training.training_samples || '-';
+          validationAccuracy.textContent = training.validation_accuracy ? 
+            `${(training.validation_accuracy * 100).toFixed(1)}%` : '-';
+          lastTrained.textContent = training.timestamp ? 
+            `Last trained: ${formatDate(training.timestamp)}` : '';
+        }
+        
+        modelLoaded.textContent = data.model_status.model_loaded ? 'Loaded' : 'Not Loaded';
+        modelStatus.textContent = `Status: ${data.model_status.status || 'Unknown'}`;
+      } catch (error) {
+        console.error('Failed to fetch model status:', error);
+      }
+    }
+
+    // Initial status update
+    updateModelStatus();
+
+    trainBtn.addEventListener('click', async () => {
+      trainBtn.disabled = true;
+      spinner.classList.remove('hidden');
+      showStatus('Training in progress...');
+
+      try {
+        const response = await fetch('/api/admin/train', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': 'default_admin_token'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Server error: ' + (await response.text()));
+        }
+
+        const data = await response.json();
+        
+        // Update the UI with training results
+        showStatus('Training completed successfully.');
+        
+        // Refresh model status
+        await updateModelStatus();
+      } catch (error) {
+        showStatus('Training failed: ' + error.message, 'error');
+      } finally {
+        trainBtn.disabled = false;
+        spinner.classList.add('hidden');
+      }
+    });
+
+    // Update model status every 30 seconds
+    setInterval(updateModelStatus, 30000);
+
+    let currentUrlInputValue = '';
+    urlInput.addEventListener('input', (e) => {
+      currentUrlInputValue = e.target.value.trim();
+    });
+
+    // Handle URL summarization
+    summarizeBtn.addEventListener('click', async () => {
+      const url = currentUrlInputValue;
+      console.log('Summarize button clicked with URL:', url);  // Debug log
+      if (!url) {
+        showStatus('Please enter a valid URL', 'error');
+        return;
+      }
+
+      summarizeBtn.disabled = true;
+      spinner.classList.remove('hidden');
+      showStatus('Summarizing URL content...');
+
+      try {
+        const response = await fetch('/api/admin/summarize-url', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': 'default_admin_token'
+          },
+          body: JSON.stringify({ url })
+        });
+
+        console.log('Summarization API response status:', response.status);  // Debug log
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Summarization API error response:', errorText);  // Debug log
+          throw new Error('Server error: ' + errorText);
+        }
+
+        const data = await response.json();
+        console.log('Summarization API response data:', data);  // Debug log
+
+        if (data.status === 'success') {
+          summaryText.textContent = data.summary;
+          summarySection.classList.remove('hidden');
+          showStatus('URL content summarized successfully');
+        } else {
+          throw new Error(data.detail || 'Failed to summarize URL');
+        }
+      } catch (error) {
+        console.error('Summarization error caught:', error);  // Debug log
+        showStatus('Summarization failed: ' + error.message, 'error');
+        summarySection.classList.add('hidden');
+      } finally {
+        summarizeBtn.disabled = false;
+        spinner.classList.add('hidden');
+      }
+    });
+
+    // Handle training data confirmation
+    confirmBtn.addEventListener('click', async () => {
+      const url = urlInput.value.trim();
+      const summary = summaryText.textContent;
+
+      if (!url || !summary) {
+        showStatus('Missing URL or summary', 'error');
+        return;
+      }
+
+      confirmBtn.disabled = true;
+      spinner.classList.remove('hidden');
+      showStatus('Adding to training data...');
+
+      try {
+        const payload = {
+          title: `Training Data from URL: ${url}`,
+          description: summary,
+          writeup_links: [url],
+          cves: [],
+          metadata: { source: 'URL Summarization' }
+        };
+
+        const response = await fetch('/api/admin/training-data', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': 'default_admin_token'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error('Server error: ' + (await response.text()));
+        }
+
+        const data = await response.json();
+        if (data.status === 'success') {
+          showStatus('Training data added successfully');
+          urlInput.value = '';
+          summarySection.classList.add('hidden');
+          // Refresh model status to show updated training samples
+          await updateModelStatus();
+        } else {
+          throw new Error(data.detail || 'Failed to add training data');
+        }
+      } catch (error) {
+        showStatus('Failed to add training data: ' + error.message, 'error');
+      } finally {
+        confirmBtn.disabled = false;
+        spinner.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

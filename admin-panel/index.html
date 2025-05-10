@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VulnLearnAI Main Dashboard</title>
+  <link href="https://cdn.tailwindcss.com" rel="stylesheet" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <nav class="bg-blue-900 p-4 shadow-md">
+    <div class="container mx-auto flex items-center justify-between">
+      <a href="#" class="text-white font-bold text-xl">VulnLearnAI Dashboard</a>
+      <div>
+        <a href="/admin/tools.html" class="text-blue-300 hover:text-white px-3">Tools</a>
+        <a href="/chat" class="text-blue-300 hover:text-white px-3">Chat</a>
+        <a href="/admin/training.html" class="text-blue-300 hover:text-white px-3">Training</a>
+        <a href="/admin/analysis.html" class="text-blue-300 hover:text-white px-3">Analysis</a>
+        <a href="/admin" class="text-blue-300 hover:text-white px-3">Admin Panel</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mx-auto mt-8 p-4">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Welcome to VulnLearnAI</h1>
+    <section class="bg-white rounded shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold mb-4">Overview</h2>
+      <p class="mb-4 text-gray-700">
+        VulnLearnAI is an AI-powered cybersecurity platform for vulnerability assessment, training, and analysis.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-blue-100 p-4 rounded shadow">
+          <h3 class="font-semibold text-lg mb-2">Tools Management</h3>
+          <p>Install, list, and remove security tools.</p>
+          <a href="tools.html" class="text-blue-700 hover:underline mt-2 inline-block">Go to Tools</a>
+        </div>
+        <div class="bg-green-100 p-4 rounded shadow">
+          <h3 class="font-semibold text-lg mb-2">Model Training</h3>
+          <p>Train and evaluate AI models for vulnerability classification.</p>
+          <a href="training.html" class="text-green-700 hover:underline mt-2 inline-block">Go to Training</a>
+        </div>
+        <div class="bg-yellow-100 p-4 rounded shadow">
+          <h3 class="font-semibold text-lg mb-2">Vulnerability Analysis</h3>
+          <p>Analyze URLs and vulnerability data using AI.</p>
+          <a href="analysis.html" class="text-yellow-700 hover:underline mt-2 inline-block">Go to Analysis</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VulnLearnAI - Tools Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div class="container mx-auto px-6 py-8 relative z-10">
+                <h1 class="text-3xl font-bold mb-2">Tools Management</h1>
+                <p class="text-blue-100">Install and manage security tools and wordlists</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bg-white shadow-sm">
+            <div class="container mx-auto px-6">
+                <div class="flex space-x-4 py-4">
+                    <a href="/admin/" class="text-gray-600 hover:text-blue-600">
+                        <i class="fas fa-home mr-2"></i>Dashboard
+                    </a>
+                    <a href="/admin/tools.html" class="text-blue-600 font-medium">
+                        <i class="fas fa-tools mr-2"></i>Tools
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-6 py-8">
+            <!-- Install Tool Form -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-6">Install New Tool</h2>
+                <form id="tool-form" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Tool Selection -->
+                        <div>
+                            <label for="tool-name" class="block text-sm font-medium text-gray-700">Select Tool</label>
+                            <select id="tool-name" name="tool-name" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <option value="">Loading tools...</option>
+                            </select>
+                            <p class="mt-1 text-sm text-gray-500">Select a preconfigured tool or enter details for a custom tool</p>
+                        </div>
+
+                        <!-- Git Repository -->
+                        <div>
+                            <label for="git-repo" class="block text-sm font-medium text-gray-700">Git Repository URL</label>
+                            <input type="url" id="git-repo" name="git-repo"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                placeholder="https://github.com/user/repo">
+                        </div>
+                    </div>
+
+                    <!-- Install Commands -->
+                    <div>
+                        <label for="install-commands" class="block text-sm font-medium text-gray-700">Install Commands</label>
+                        <div class="mt-1 flex rounded-md shadow-sm">
+                            <input type="text" id="install-commands" name="install-commands"
+                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                placeholder="pip install -r requirements.txt">
+                            <button type="button" id="add-command" 
+                                class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Add Command
+                            </button>
+                        </div>
+                        <div id="commands-container" class="mt-2 space-y-2"></div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-end">
+                        <button type="submit"
+                            class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <i class="fas fa-download mr-2"></i>
+                            Install Tool
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Installed Tools -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-6">Installed Tools</h2>
+                <div id="tools-list" class="divide-y divide-gray-200">
+                    <!-- Tools will be dynamically added here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Component -->
+    <div id="notification" class="fixed bottom-4 right-4 transform transition-transform duration-300 translate-y-full">
+        <div class="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg">
+            <span id="notification-message"></span>
+        </div>
+    </div>
+
+    <script src="js/tools.js"></script>
+</body>
+</html>

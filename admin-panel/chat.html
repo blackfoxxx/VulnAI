@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VulnLearnAI Chat</title>
+  <link href="https://cdn.tailwindcss.com" rel="stylesheet" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <nav class="bg-blue-900 p-4 shadow-md">
+    <div class="container mx-auto flex items-center justify-between">
+      <a href="/" class="text-white font-bold text-xl">VulnLearnAI Chat</a>
+      <div>
+        <a href="/" class="text-blue-300 hover:text-white px-3">Dashboard</a>
+        <a href="/admin" class="text-blue-300 hover:text-white px-3">Admin Panel</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mx-auto mt-8 p-4 max-w-3xl">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Chat with VulnLearnAI</h1>
+    <div id="chat-container" class="bg-white rounded shadow p-6 h-[400px] overflow-y-auto mb-4">
+      <!-- Chat messages will appear here -->
+    </div>
+    <form id="chat-form" class="flex">
+      <input
+        id="chat-input"
+        type="text"
+        placeholder="Type your message..."
+        class="flex-grow border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        autocomplete="off"
+      />
+      <button
+        type="submit"
+        class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700 transition"
+      >
+        Send
+      </button>
+    </form>
+  </main>
+
+  <script>
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatContainer = document.getElementById('chat-container');
+
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      appendMessage('You', message);
+      chatInput.value = '';
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message }),
+        });
+        const data = await response.json();
+        if (data.reply) {
+          appendMessage('VulnLearnAI', data.reply);
+        } else {
+          appendMessage('VulnLearnAI', 'No response from AI.');
+        }
+      } catch (error) {
+        appendMessage('VulnLearnAI', 'Error communicating with server.');
+      }
+    });
+
+    function appendMessage(sender, text) {
+      const messageElem = document.createElement('div');
+      messageElem.classList.add('mb-2');
+      messageElem.innerHTML = `<strong>${sender}:</strong> ${text}`;
+      chatContainer.appendChild(messageElem);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  </script>
+</body>
+</html>
