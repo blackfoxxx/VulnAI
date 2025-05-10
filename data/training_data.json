@@ -30,5 +30,17 @@
             "source": "URL Summarization"
         },
         "timestamp": "2025-05-10T13:43:40.415417"
+    },
+    {
+        "title": "Training Data from URL: https://medium.com/ctf-writeups/hack-the-box-jerry-write-up-6f045601315f",
+        "description": "The write-up details the exploitation of the 'Jerry' box on Hack The Box, which runs on Windows with an IP of 10.10.10.95. The initial step involved using Nmap to identify that Apache Tomcat was running on port 8080. The author discovered default login credentials for the Tomcat Manager App, which allowed them to upload a WAR file\u2014an exploit using the Metasploit module `multi/http/tomcat_mgr_upload`. This led to an authenticated remote code execution (RCE) without needing privilege escalation, as the Apache service ran as root. Upon gaining shell access, the author quickly found the necessary flags for submission, highlighting the box's relative ease for beginners.",
+        "writeup_links": [
+            "https://medium.com/ctf-writeups/hack-the-box-jerry-write-up-6f045601315f"
+        ],
+        "cves": [],
+        "metadata": {
+            "source": "URL Summarization"
+        },
+        "timestamp": "2025-05-10T14:07:16.571333"
     }
 ]
