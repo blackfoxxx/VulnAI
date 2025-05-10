@@ -14,7 +14,7 @@ VulnLearnAI is an AI-powered cybersecurity tool that learns from real-world pent
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/VulnAI.git
+git clone https://github.com/blackfoxxx/VulnAI.git
 cd VulnAI
 ```
 
