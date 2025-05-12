@@ -21,22 +21,17 @@
         </header>
 
         <!-- Navigation -->
-        <nav class="bg-white shadow-sm sticky top-0 z-50">
-            <div class="container mx-auto px-6">
-                <div class="flex items-center space-x-8 py-4">
-                    <a href="/admin/" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                        <i class="fas fa-home mr-2"></i>Dashboard
-                    </a>
-                    <a href="/admin/tools-enhanced.html" class="text-blue-600 font-medium flex items-center">
-                        <i class="fas fa-tools mr-2"></i>Tools
-                    </a>
-                    <div class="flex-grow"></div>
-                    <!-- Search Bar -->
-                    <div class="relative">
-                        <input type="text" id="tool-search" placeholder="Search tools..." 
-                            class="w-64 pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-                    </div>
+        <nav class="bg-blue-900 p-4 shadow-md">
+            <div class="container mx-auto flex items-center justify-between">
+                <a href="index.html" class="text-white font-bold text-xl">VulnLearnAI Tools</a>
+                <button class="text-white md:hidden" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div id="menu" class="hidden md:flex">
+                    <a href="index.html" class="text-blue-300 hover:text-white px-3">Dashboard</a>
+                    <a href="tools.html" class="text-blue-300 hover:text-white px-3">Tools</a>
+                    <a href="training.html" class="text-blue-300 hover:text-white px-3">Training</a>
+                    <a href="analysis.html" class="text-blue-300 hover:text-white px-3">Analysis</a>
                 </div>
             </div>
         </nav>
@@ -167,6 +162,21 @@
             </div>
         </div>
     </div>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 VulnLearnAI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
 
     <script src="js/tools-enhanced.js"></script>
 </body>

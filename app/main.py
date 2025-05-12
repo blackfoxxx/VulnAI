@@ -4,8 +4,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 import os
 from dotenv import load_dotenv
+from prometheus_client import start_http_server, Counter
 
-from app.api import admin_endpoints, tools_endpoints, chat_endpoint
+from app.api import admin_endpoints, tools_endpoints, chat_endpoint, tools_endpoint, tool_requests_endpoint
 from app.utils import error_handlers, logger
 from app.ml.training_engine import engine as ml_engine
 
@@ -58,6 +59,18 @@ app.include_router(
 )
 
 app.include_router(
+    tools_endpoint.router,
+    prefix="/api",
+    tags=["tools-api"]
+)
+
+app.include_router(
+    tool_requests_endpoint.router,
+    prefix="/api",
+    tags=["tool-requests"]
+)
+
+app.include_router(
     chat_endpoint.router,
     prefix="/api",
     tags=["chat"]
@@ -99,6 +112,10 @@ app.mount("/", StaticFiles(directory=str(landing_dir), html=True), name="landing
 async def chat_redirect():
     return RedirectResponse(url="/admin/chat.html")
 
+@app.get("/chat-tools")
+async def chat_tools_redirect():
+    return RedirectResponse(url="/admin/chat-tools.html")
+
 @app.get("/training")
 async def training_redirect():
     return RedirectResponse(url="/admin/training.html")
@@ -131,7 +148,23 @@ async def root():
     index_path = admin_dir / "index.html"
     return index_path.read_text(encoding="utf-8")
 
+# Initialize Prometheus metrics
+REQUEST_COUNT = Counter("request_count", "Total number of requests", ["endpoint"])
 
+# Start Prometheus metrics server
+start_http_server(8001)
+
+@app.middleware("http")
+async def prometheus_middleware(request, call_next):
+    response = await call_next(request)
+    REQUEST_COUNT.labels(endpoint=request.url.path).inc()
+    return response
+
+@app.get("/metrics")
+def metrics():
+    """Expose Prometheus metrics"""
+    from prometheus_client import generate_latest
+    return generate_latest()
 
 # Startup event
 @app.on_event("startup")
@@ -150,4 +183,4 @@ async def shutdown_event():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8008)

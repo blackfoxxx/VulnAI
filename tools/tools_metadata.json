@@ -6,24 +6,251 @@
         "install_commands": [
             "python3 -m pip install -r requirements.txt"
         ],
-        "category": "web_security"
+        "category": "web_security",
+        "command": "python3 -m sqlmap -u {url} --batch",
+        "expected_output": "SQLMap scan results including potential SQL injection vulnerabilities",
+        "usage_example": "Run SQLMap on https://example.com/login.php",
+        "parameter_template": {
+            "url": "https://example.com/login.php"
+        },
+        "default_param": "url",
+        "natural_language_patterns": [
+            "check for sql injection",
+            "test for sql injection",
+            "find sql vulnerabilities",
+            "run sql injection test",
+            "test if website is vulnerable to sql injection"
+        ]
     },
     "ffuf": {
         "name": "FFUF",
-        "description": "Fast web fuzzer written in Go",
+        "description": "Fast web fuzzer for discovering hidden files and directories",
         "git_repo_url": "https://github.com/ffuf/ffuf.git",
         "install_commands": [
             "go build"
         ],
-        "category": "web_security"
+        "category": "web_security",
+        "command": "ffuf -u {url}/FUZZ -w /usr/share/wordlists/dirb/common.txt",
+        "expected_output": "List of discovered paths and response codes",
+        "usage_example": "Use FFUF to scan example.com for hidden directories",
+        "parameter_template": {
+            "url": "https://example.com"
+        },
+        "default_param": "url"
     },
     "dirsearch": {
         "name": "Dirsearch",
-        "description": "Web path scanner",
+        "description": "Web path scanner to find hidden files and directories",
         "git_repo_url": "https://github.com/maurosoria/dirsearch.git",
         "install_commands": [
             "python3 -m pip install -r requirements.txt"
         ],
-        "category": "web_security"
+        "category": "web_security",
+        "command": "python3 -m dirsearch -u {url} -e php,html,js",
+        "expected_output": "Discovered directories and files with their response codes",
+        "usage_example": "Scan example.com with Dirsearch",
+        "parameter_template": {
+            "url": "https://example.com"
+        },
+        "default_param": "url"
+    },
+    "url_scanner": {
+        "name": "URL Scanner",
+        "description": "Scans a given URL for vulnerabilities and returns a detailed report",
+        "command": "python3 app/ml/url_scanner.py --url {url}",
+        "expected_output": "JSON report with vulnerability details",
+        "usage_example": "Scan the URL example.com for vulnerabilities",
+        "parameter_template": {
+            "url": "https://example.com"
+        },
+        "default_param": "url"
+    },
+    "log_analyzer": {
+        "name": "Log Analyzer",
+        "description": "Analyzes server logs to detect suspicious activities",
+        "command": "python3 app/tools/log_analyzer.py --logfile {logfile}",
+        "expected_output": "Summary of detected anomalies",
+        "usage_example": "Analyze the log file /var/log/apache2/access.log",
+        "parameter_template": {
+            "logfile": "/var/log/apache2/access.log"
+        },
+        "default_param": "logfile"
+    },
+    "whatweb": {
+        "name": "WhatWeb",
+        "description": "Identify website technologies, CMS, plugins, and other details",
+        "command": "whatweb {url}",
+        "expected_output": "List of detected technologies and their versions",
+        "usage_example": "Check what technologies example.com is using with WhatWeb",
+        "parameter_template": {
+            "url": "https://example.com"
+        },
+        "default_param": "url",
+        "natural_language_patterns": [
+            "check what technologies",
+            "identify web technologies",
+            "find out what technologies",
+            "what is website using",
+            "detect CMS",
+            "find website framework"
+        ]
+    },
+    "nuclei": {
+        "name": "Nuclei",
+        "description": "Vulnerability scanner that uses templates to find security issues",
+        "git_repo_url": "https://github.com/projectdiscovery/nuclei.git",
+        "install_commands": [
+            "go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest"
+        ],
+        "category": "web_security",
+        "command": "nuclei -u {url} -t /app/nuclei-templates/",
+        "expected_output": "List of detected vulnerabilities based on templates",
+        "usage_example": "Run Nuclei scan on example.com",
+        "parameter_template": {
+            "url": "https://example.com"
+        },
+        "default_param": "url",
+        "natural_language_patterns": [
+            "scan for vulnerabilities",
+            "find security issues",
+            "check vulnerabilities",
+            "detect security problems",
+            "scan website security"
+        ]
+    },
+    "nmap": {
+        "name": "Nmap",
+        "description": "Network scanning and host discovery tool",
+        "command": "nmap -A {target}",
+        "expected_output": "Open ports, services, and version information",
+        "usage_example": "Run Nmap scan on example.com",
+        "parameter_template": {
+            "target": "example.com"
+        },
+        "default_param": "target",
+        "natural_language_patterns": [
+            "scan network",
+            "find open ports",
+            "check what ports are open",
+            "scan for services",
+            "scan ip address",
+            "port scan",
+            "detect running services"
+        ]
+    },
+    "subfinder": {
+        "name": "Subfinder",
+        "description": "Subdomain discovery tool that discovers valid subdomains for websites",
+        "git_repo_url": "https://github.com/projectdiscovery/subfinder.git",
+        "install_commands": [
+            "go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest"
+        ],
+        "category": "recon",
+        "command": "subfinder -d {domain} -silent",
+        "expected_output": "List of discovered subdomains",
+        "usage_example": "Find subdomains of example.com",
+        "parameter_template": {
+            "domain": "example.com"
+        },
+        "default_param": "domain",
+        "natural_language_patterns": [
+            "find subdomains",
+            "discover subdomains",
+            "enumerate subdomains",
+            "subdomain enumeration",
+            "identify subdomains"
+        ]
+    },
+    "httpx": {
+        "name": "httpx",
+        "description": "Fast and multi-purpose HTTP toolkit that allows running multiple probes",
+        "git_repo_url": "https://github.com/projectdiscovery/httpx.git",
+        "install_commands": [
+            "go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest"
+        ],
+        "category": "web_security",
+        "command": "httpx -u {url} -silent",
+        "expected_output": "HTTP response information and headers",
+        "usage_example": "Probe example.com with httpx",
+        "parameter_template": {
+            "url": "https://example.com"
+        },
+        "default_param": "url",
+        "natural_language_patterns": [
+            "check http status",
+            "probe website",
+            "check web server",
+            "test web response",
+            "verify http service"
+        ]
+    },
+    "katana": {
+        "name": "Katana",
+        "description": "A fast crawler designed to execute JavaScript and DOM rendering for efficient web crawling",
+        "git_repo_url": "https://github.com/projectdiscovery/katana.git",
+        "install_commands": [
+            "go install -v github.com/projectdiscovery/katana/cmd/katana@latest"
+        ],
+        "category": "web_security",
+        "command": "katana -u {url} -silent",
+        "expected_output": "List of discovered URLs and endpoints",
+        "usage_example": "Crawl example.com with Katana",
+        "parameter_template": {
+            "url": "https://example.com"
+        },
+        "default_param": "url",
+        "natural_language_patterns": [
+            "crawl website",
+            "find all urls",
+            "discover endpoints",
+            "crawl for urls",
+            "spider website"
+        ]
+    },
+    "naabu": {
+        "name": "Naabu",
+        "description": "Fast port scanner with a focus on reliability and simplicity",
+        "git_repo_url": "https://github.com/projectdiscovery/naabu.git",
+        "install_commands": [
+            "go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest"
+        ],
+        "category": "network_security",
+        "command": "naabu -host {target} -silent",
+        "expected_output": "List of open ports on the target",
+        "usage_example": "Scan ports on example.com with Naabu",
+        "parameter_template": {
+            "target": "example.com"
+        },
+        "default_param": "target",
+        "natural_language_patterns": [
+            "scan ports",
+            "check open ports",
+            "find open ports",
+            "port scanning",
+            "discover ports"
+        ]
+    },
+    "gau": {
+        "name": "Gau",
+        "description": "GetAllUrls (gau) fetches known URLs from various sources for a domain",
+        "git_repo_url": "https://github.com/lc/gau.git",
+        "install_commands": [
+            "go install -v github.com/lc/gau/v2/cmd/gau@latest"
+        ],
+        "category": "web_security",
+        "command": "gau {domain} --verbose=false",
+        "expected_output": "List of historical and current URLs for the domain",
+        "usage_example": "Find all URLs for example.com with Gau",
+        "parameter_template": {
+            "domain": "example.com"
+        },
+        "default_param": "domain",
+        "natural_language_patterns": [
+            "find all urls",
+            "extract urls from archives",
+            "get historical urls",
+            "fetch known urls",
+            "discover endpoints from archives"
+        ]
     }
 }

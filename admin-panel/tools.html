@@ -20,15 +20,17 @@
         </header>
 
         <!-- Navigation -->
-        <nav class="bg-white shadow-sm">
-            <div class="container mx-auto px-6">
-                <div class="flex space-x-4 py-4">
-                    <a href="/admin/" class="text-gray-600 hover:text-blue-600">
-                        <i class="fas fa-home mr-2"></i>Dashboard
-                    </a>
-                    <a href="/admin/tools.html" class="text-blue-600 font-medium">
-                        <i class="fas fa-tools mr-2"></i>Tools
-                    </a>
+        <nav class="bg-blue-900 p-4 shadow-md">
+            <div class="container mx-auto flex items-center justify-between">
+                <a href="index.html" class="text-white font-bold text-xl">VulnLearnAI Dashboard</a>
+                <button class="text-white md:hidden" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div id="menu" class="hidden md:flex">
+                    <a href="index.html" class="text-blue-300 hover:text-white px-3">Dashboard</a>
+                    <a href="tools.html" class="text-blue-300 hover:text-white px-3">Tools</a>
+                    <a href="training.html" class="text-blue-300 hover:text-white px-3">Training</a>
+                    <a href="analysis.html" class="text-blue-300 hover:text-white px-3">Analysis</a>
                 </div>
             </div>
         </nav>
@@ -85,6 +87,61 @@
                 </form>
             </div>
 
+            <!-- Register New Tool Form -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-6">Register New Tool</h2>
+                <form id="register-tool-form" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Tool Name -->
+                        <div>
+                            <label for="tool-name" class="block text-sm font-medium text-gray-700">Tool Name</label>
+                            <input type="text" id="tool-name" name="tool-name" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                placeholder="Enter tool name">
+                        </div>
+
+                        <!-- Description -->
+                        <div>
+                            <label for="tool-description" class="block text-sm font-medium text-gray-700">Description</label>
+                            <textarea id="tool-description" name="tool-description" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                placeholder="Enter tool description"></textarea>
+                        </div>
+
+                        <!-- Command -->
+                        <div>
+                            <label for="tool-command" class="block text-sm font-medium text-gray-700">Command</label>
+                            <input type="text" id="tool-command" name="tool-command" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                placeholder="Enter command to execute the tool">
+                        </div>
+
+                        <!-- Expected Output -->
+                        <div>
+                            <label for="tool-output" class="block text-sm font-medium text-gray-700">Expected Output</label>
+                            <textarea id="tool-output" name="tool-output" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                placeholder="Describe the expected output"></textarea>
+                        </div>
+
+                        <!-- Git Repository URL -->
+                        <div>
+                            <label for="tool-git-repo" class="block text-sm font-medium text-gray-700">Git Repository URL (Optional)</label>
+                            <input type="url" id="tool-git-repo" name="tool-git-repo"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                placeholder="https://github.com/user/repo">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Register Tool
+                        </button>
+                    </div>
+                </form>
+            </div>
+
             <!-- Installed Tools -->
             <div class="bg-white rounded-lg shadow-lg p-6">
                 <h2 class="text-2xl font-semibold mb-6">Installed Tools</h2>
@@ -102,6 +159,20 @@
         </div>
     </div>
 
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 VulnLearnAI. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script src="js/tools.js"></script>
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>

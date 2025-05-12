@@ -235,5 +235,45 @@ document.getElementById('install-commands').addEventListener('keypress', (e) => 
     }
 });
 
+// Handle Register Tool Form Submission
+document.getElementById('register-tool-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const toolName = document.getElementById('tool-name').value;
+    const toolDescription = document.getElementById('tool-description').value;
+    const toolCommand = document.getElementById('tool-command').value;
+    const toolOutput = document.getElementById('tool-output').value;
+    const toolGitRepo = document.getElementById('tool-git-repo').value;
+
+    const payload = {
+        name: toolName,
+        description: toolDescription,
+        command: toolCommand,
+        expected_output: toolOutput,
+        git_repo_url: toolGitRepo || null
+    };
+
+    try {
+        const response = await fetch('/api/register-tool', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            showNotification(result.message, 'success');
+            document.getElementById('register-tool-form').reset();
+        } else {
+            const error = await response.json();
+            showNotification(error.detail, 'error');
+        }
+    } catch (error) {
+        showNotification('Failed to register tool. Please try again.', 'error');
+    }
+});
+
 // Initial load of installed tools
 document.addEventListener('DOMContentLoaded', loadTools);

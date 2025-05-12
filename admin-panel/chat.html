@@ -31,7 +31,7 @@
       <input
         id="chat-input"
         type="text"
-        placeholder="Type your message..."
+        placeholder="Type your message or command (e.g., 'Scan URL: example.com')"
         class="flex-grow border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         autocomplete="off"
       />
@@ -42,12 +42,64 @@
         Send
       </button>
     </form>
+
+    <!-- Available Tools Section -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mt-6 mb-8">
+      <h2 class="text-2xl font-semibold mb-4">Available Tools</h2>
+      <p class="mb-4">You can use these tools directly in your chat by mentioning them. For example: "Scan the URL example.com for vulnerabilities" or "Run Nuclei on target.com"</p>
+      <div id="available-tools" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Tools will be loaded here dynamically -->
+        <div class="animate-pulse flex space-x-4">
+          <div class="flex-1 space-y-4 py-1">
+            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+            <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <script>
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
     const chatContainer = document.getElementById('chat-container');
+    const availableToolsContainer = document.getElementById('available-tools');
+    
+    // Store available tools
+    let availableTools = [];
+
+    // Fetch available tools on page load
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('/api/tools/list');
+        const data = await response.json();
+        availableTools = data.tools || [];
+        renderAvailableTools();
+      } catch (error) {
+        console.error('Error fetching tools:', error);
+      }
+    });
+
+    // Render available tools in the UI
+    function renderAvailableTools() {
+      availableToolsContainer.innerHTML = '';
+      
+      if (availableTools.length === 0) {
+        availableToolsContainer.innerHTML = '<p class="text-gray-500">No tools available.</p>';
+        return;
+      }
+
+      availableTools.forEach(tool => {
+        const toolElement = document.createElement('div');
+        toolElement.className = 'border border-gray-200 rounded-lg p-4 hover:bg-gray-50';
+        toolElement.innerHTML = `
+          <h3 class="text-lg font-medium text-blue-600">${tool.name}</h3>
+          <p class="text-sm text-gray-600 mt-1">${tool.description}</p>
+          <div class="text-xs text-gray-500 mt-2">Usage example: "${tool.example || `Run ${tool.name}`}"</div>
+        `;
+        availableToolsContainer.appendChild(toolElement);
+      });
+    }
 
     chatForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -57,27 +109,79 @@
       appendMessage('You', message);
       chatInput.value = '';
 
+      // Show typing indicator
+      const typingIndicator = document.createElement('div');
+      typingIndicator.id = 'typing-indicator';
+      typingIndicator.className = 'flex space-x-2 p-2';
+      typingIndicator.innerHTML = `
+        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
+        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+      `;
+      chatContainer.appendChild(typingIndicator);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
       try {
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message }),
         });
+        
+        // Remove typing indicator
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
+        
         const data = await response.json();
-        if (data.reply) {
+        
+        if (data.tool_execution) {
+          // Tool was executed
+          appendMessage('VulnLearnAI', `I'm executing the ${data.tool_execution.tool_name} tool for you...`);
+          
+          const toolOutputElement = document.createElement('div');
+          toolOutputElement.className = 'tool-output bg-gray-100 p-3 rounded-lg my-2 text-sm font-mono overflow-auto max-h-64';
+          toolOutputElement.innerHTML = `<strong>Tool:</strong> ${data.tool_execution.tool_name}<br>
+                                        <strong>Output:</strong><br>${formatToolOutput(data.tool_execution.output)}`;
+          chatContainer.appendChild(toolOutputElement);
+          
+          if (data.reply) {
+            appendMessage('VulnLearnAI', data.reply);
+          }
+        } else if (data.reply) {
           appendMessage('VulnLearnAI', data.reply);
         } else {
           appendMessage('VulnLearnAI', 'No response from AI.');
         }
       } catch (error) {
+        // Remove typing indicator
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
+        
         appendMessage('VulnLearnAI', 'Error communicating with server.');
       }
     });
 
+    function formatToolOutput(output) {
+      return output.replace(/\n/g, '<br>');
+    }
+
     function appendMessage(sender, text) {
       const messageElem = document.createElement('div');
-      messageElem.classList.add('mb-2');
-      messageElem.innerHTML = `<strong>${sender}:</strong> ${text}`;
+      messageElem.classList.add('mb-3', 'p-3', sender === 'You' ? 'bg-blue-50' : 'bg-gray-50', 'rounded-lg');
+      
+      // Create sender element with styles
+      const senderElem = document.createElement('div');
+      senderElem.classList.add('font-bold', sender === 'You' ? 'text-blue-600' : 'text-gray-700', 'mb-1');
+      senderElem.textContent = sender;
+      
+      // Create content element
+      const contentElem = document.createElement('div');
+      contentElem.innerHTML = text.replace(/\n/g, '<br>');
+      
+      // Append to message
+      messageElem.appendChild(senderElem);
+      messageElem.appendChild(contentElem);
+      
       chatContainer.appendChild(messageElem);
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }

@@ -15,12 +15,16 @@
   <nav class="bg-blue-900 p-4 shadow-md">
     <div class="container mx-auto flex items-center justify-between">
       <a href="#" class="text-white font-bold text-xl">VulnLearnAI Dashboard</a>
-      <div>
-        <a href="/admin/tools.html" class="text-blue-300 hover:text-white px-3">Tools</a>
-        <a href="/chat" class="text-blue-300 hover:text-white px-3">Chat</a>
-        <a href="/admin/training.html" class="text-blue-300 hover:text-white px-3">Training</a>
-        <a href="/admin/analysis.html" class="text-blue-300 hover:text-white px-3">Analysis</a>
-        <a href="/admin" class="text-blue-300 hover:text-white px-3">Admin Panel</a>
+      <button class="text-white md:hidden" id="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div id="menu" class="hidden md:flex">
+        <a href="tools.html" class="text-blue-300 hover:text-white px-3">Tools</a>
+        <a href="chat.html" class="text-blue-300 hover:text-white px-3">Chat</a>
+        <a href="chat-tools.html" class="text-blue-300 hover:text-white px-3">Interactive Chat</a>
+        <a href="training.html" class="text-blue-300 hover:text-white px-3">Training</a>
+        <a href="analysis.html" class="text-blue-300 hover:text-white px-3">Analysis</a>
+        <a href="index.html" class="text-blue-300 hover:text-white px-3">Admin Panel</a>
       </div>
     </div>
   </nav>
@@ -38,6 +42,11 @@
           <p>Install, list, and remove security tools.</p>
           <a href="tools.html" class="text-blue-700 hover:underline mt-2 inline-block">Go to Tools</a>
         </div>
+        <div class="bg-purple-100 p-4 rounded shadow">
+          <h3 class="font-semibold text-lg mb-2">Interactive Security Chat</h3>
+          <p>Chat with AI and run security tools with natural language.</p>
+          <a href="chat-tools.html" class="text-purple-700 hover:underline mt-2 inline-block">Try Interactive Chat</a>
+        </div>
         <div class="bg-green-100 p-4 rounded shadow">
           <h3 class="font-semibold text-lg mb-2">Model Training</h3>
           <p>Train and evaluate AI models for vulnerability classification.</p>
@@ -51,5 +60,20 @@
       </div>
     </section>
   </main>
+
+  <footer class="bg-gray-800 text-white p-4 mt-8">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2025 VulnLearnAI. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
 </body>
 </html>

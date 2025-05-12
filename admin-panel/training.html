@@ -14,13 +14,15 @@
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
   <nav class="bg-blue-900 p-4 shadow-md">
     <div class="container mx-auto flex items-center justify-between">
-      <a href="/admin" class="text-white font-bold text-xl">VulnLearnAI Training</a>
-      <div>
-        <a href="/admin" class="text-blue-300 hover:text-white px-3">Dashboard</a>
-        <a href="/chat" class="text-blue-300 hover:text-white px-3">Chat</a>
-        <a href="/admin/tools.html" class="text-blue-300 hover:text-white px-3">Tools</a>
-        <a href="/admin/analysis.html" class="text-blue-300 hover:text-white px-3">Analysis</a>
-        <a href="/admin" class="text-blue-300 hover:text-white px-3">Admin Panel</a>
+      <a href="index.html" class="text-white font-bold text-xl">VulnLearnAI Training</a>
+      <button class="text-white md:hidden" id="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div id="menu" class="hidden md:flex">
+        <a href="index.html" class="text-blue-300 hover:text-white px-3">Dashboard</a>
+        <a href="tools.html" class="text-blue-300 hover:text-white px-3">Tools</a>
+        <a href="training.html" class="text-blue-300 hover:text-white px-3">Training</a>
+        <a href="analysis.html" class="text-blue-300 hover:text-white px-3">Analysis</a>
       </div>
     </div>
   </nav>
@@ -106,6 +108,12 @@
       </div>
     </section>
   </main>
+
+  <footer class="bg-gray-800 text-white p-4 mt-8">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2025 VulnLearnAI. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script>
     const trainBtn = document.getElementById('train-btn');
@@ -310,6 +318,13 @@
         confirmBtn.disabled = false;
         spinner.classList.add('hidden');
       }
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
     });
   </script>
 </body>

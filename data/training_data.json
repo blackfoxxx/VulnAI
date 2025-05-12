@@ -10,8 +10,8 @@
         "timestamp": "2024-05-08T19:55:00Z"
     },
     {
-        "title": "Hack The Box \u2014 Jerry Write-up",
-        "description": "Hack The Box \u2014 Jerry Write-up\n",
+        "title": "Hack The Box — Jerry Write-up",
+        "description": "Hack The Box — Jerry Write-up",
         "writeup_links": [
             "https://medium.com/ctf-writeups/hack-the-box-jerry-write-up-6f045601315f"
         ],
@@ -32,15 +32,27 @@
         "timestamp": "2025-05-10T13:43:40.415417"
     },
     {
-        "title": "Training Data from URL: https://medium.com/ctf-writeups/hack-the-box-jerry-write-up-6f045601315f",
-        "description": "The write-up details the exploitation of the 'Jerry' box on Hack The Box, which runs on Windows with an IP of 10.10.10.95. The initial step involved using Nmap to identify that Apache Tomcat was running on port 8080. The author discovered default login credentials for the Tomcat Manager App, which allowed them to upload a WAR file\u2014an exploit using the Metasploit module `multi/http/tomcat_mgr_upload`. This led to an authenticated remote code execution (RCE) without needing privilege escalation, as the Apache service ran as root. Upon gaining shell access, the author quickly found the necessary flags for submission, highlighting the box's relative ease for beginners.",
+        "title": "Cross-Site Scripting (XSS) in Search Bar",
+        "description": "A reflected XSS vulnerability was identified in the search bar of the application. By injecting malicious JavaScript code into the search query, attackers can execute scripts in the context of other users' browsers. This vulnerability arises due to improper sanitization of user input.",
         "writeup_links": [
-            "https://medium.com/ctf-writeups/hack-the-box-jerry-write-up-6f045601315f"
+            "https://example.com/xss-vulnerability-details"
         ],
-        "cves": [],
-        "metadata": {
-            "source": "URL Summarization"
-        },
-        "timestamp": "2025-05-10T14:07:16.571333"
+        "cves": [
+            "CVE-2024-56789"
+        ],
+        "metadata": {},
+        "timestamp": "2025-05-11T10:00:00Z"
+    },
+    {
+        "title": "Buffer Overflow in File Upload Module",
+        "description": "A buffer overflow vulnerability was discovered in the file upload module. Attackers can exploit this by uploading a specially crafted file, leading to arbitrary code execution on the server. The issue is caused by insufficient bounds checking on the file input.",
+        "writeup_links": [
+            "https://example.com/buffer-overflow-details"
+        ],
+        "cves": [
+            "CVE-2025-12345"
+        ],
+        "metadata": {},
+        "timestamp": "2025-05-11T10:30:00Z"
     }
 ]

@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Security Tool Metadata",
+  "description": "Schema for security tool definitions in VulnLearnAI",
+  "type": "object",
+  "patternProperties": {
+    "^[a-zA-Z0-9_-]+$": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Display name of the tool"
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief description of what the tool does"
+        },
+        "git_repo_url": {
+          "type": "string",
+          "description": "URL to the git repository (if applicable)"
+        },
+        "install_commands": {
+          "type": "array",
+          "description": "Commands to install the tool",
+          "items": {
+            "type": "string"
+          }
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of the tool (e.g., web_security, network, etc.)"
+        },
+        "command": {
+          "type": "string",
+          "description": "Command to run the tool with parameter placeholders"
+        },
+        "expected_output": {
+          "type": "string",
+          "description": "Description of expected output from the tool"
+        },
+        "usage_example": {
+          "type": "string",
+          "description": "Example of how to use the tool in natural language"
+        },
+        "parameter_template": {
+          "type": "object",
+          "description": "Template for parameters with default values",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "default_param": {
+          "type": "string",
+          "description": "Default parameter name if not specified"
+        },
+        "natural_language_patterns": {
+          "type": "array",
+          "description": "Patterns to match in natural language for tool detection",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["name", "description", "command", "expected_output", "parameter_template"]
+    }
+  },
+  "additionalProperties": false
+}

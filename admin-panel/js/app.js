@@ -236,3 +236,42 @@ document.getElementById('cves').addEventListener('keypress', (e) => {
         document.getElementById('add-cve').click();
     }
 });
+
+// Handle Tool Execution Form Submission
+document.getElementById('tool-execution-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const toolName = document.getElementById('tool-name').value;
+  const toolParameters = document.getElementById('tool-parameters').value;
+
+  try {
+    const response = await fetch('/api/chat/tool', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        tool_name: toolName,
+        parameters: JSON.parse(toolParameters)
+      })
+    });
+
+    const outputDiv = document.getElementById('tool-output');
+    const outputPre = outputDiv.querySelector('pre');
+
+    if (response.ok) {
+      const result = await response.json();
+      outputPre.textContent = result.output;
+      outputDiv.classList.remove('hidden');
+    } else {
+      const error = await response.json();
+      outputPre.textContent = `Error: ${error.detail}`;
+      outputDiv.classList.remove('hidden');
+    }
+  } catch (error) {
+    const outputDiv = document.getElementById('tool-output');
+    const outputPre = outputDiv.querySelector('pre');
+    outputPre.textContent = 'Failed to execute tool. Please try again.';
+    outputDiv.classList.remove('hidden');
+  }
+});

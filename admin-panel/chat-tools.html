@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VulnLearnAI - Interactive Security Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .chat-container {
+            height: calc(100vh - 320px);
+            min-height: 400px;
+        }
+        .tool-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .code-block {
+            background-color: #282c34;
+            color: #abb2bf;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #a0aec0;
+            border-radius: 50%;
+            margin-right: 3px;
+            animation: typing 1s infinite;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-[Inter]">
+    <div class="min-h-screen">
+        <!-- Header with Background Image -->
+        <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/7095/people-coffee-notes-tea.jpg')"></div>
+            <div class="container mx-auto px-6 py-12 relative z-10">
+                <h1 class="text-4xl font-bold mb-3">Interactive Security Chat</h1>
+                <p class="text-blue-100 text-lg max-w-2xl">Chat with the AI about security topics and execute security tools directly from the conversation interface.</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bg-blue-900 p-4 shadow-md">
+            <div class="container mx-auto flex items-center justify-between">
+                <a href="index.html" class="text-white font-bold text-xl">VulnLearnAI</a>
+                <button class="text-white md:hidden" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div id="menu" class="hidden md:flex">
+                    <a href="index.html" class="text-blue-300 hover:text-white px-3">Dashboard</a>
+                    <a href="tools-enhanced.html" class="text-blue-300 hover:text-white px-3">Tools</a>
+                    <a href="training.html" class="text-blue-300 hover:text-white px-3">Training</a>
+                    <a href="chat-tools.html" class="text-blue-300 hover:text-white px-3 border-b-2 border-white">Chat</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row gap-6">
+                <!-- Chat Area - Takes 2/3 of the space on desktop -->
+                <div class="w-full md:w-2/3 flex flex-col">
+                    <div class="bg-white rounded-xl shadow-lg p-6 mb-4 flex-grow">
+                        <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                            <i class="fas fa-comments text-blue-600 mr-3"></i>
+                            Security Chat
+                        </h2>
+                        
+                        <!-- Chat Container -->
+                        <div id="chat-container" class="chat-container overflow-y-auto border border-gray-200 rounded-lg p-4 mb-4">
+                            <!-- Welcome message -->
+                            <div class="flex items-start mb-4">
+                                <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white mr-3 flex-shrink-0">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="bg-blue-50 p-3 rounded-lg max-w-[85%]">
+                                    <p class="font-medium text-blue-900">VulnLearnAI</p>
+                                    <p class="text-gray-700">
+                                        Welcome to VulnLearnAI! I can help you with security topics and execute security tools. For example, you can ask me to:
+                                        <br><br>
+                                        • Scan a website with Nuclei<br>
+                                        • Analyze a domain with WhatWeb<br>
+                                        • Run an Nmap scan<br>
+                                        • Execute SQLMap on a URL<br>
+                                        <br>
+                                        What would you like to do today?
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Chat messages will be added here -->
+                        </div>
+                        
+                        <!-- Chat Input Form -->
+                        <form id="chat-form" class="flex items-center">
+                            <input type="text" id="chat-input" class="flex-grow border border-gray-300 rounded-l-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                placeholder="Type your message or command (e.g., 'Scan example.com with Nuclei')">
+                            <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-r-lg hover:bg-blue-700 transition">
+                                <i class="fas fa-paper-plane mr-2"></i> Send
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Tools Panel - Takes 1/3 of the space on desktop -->
+                <div class="w-full md:w-1/3">
+                    <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                        <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                            <i class="fas fa-tools text-blue-600 mr-3"></i>
+                            Available Tools
+                        </h2>
+                        
+                        <div class="mb-4 flex">
+                            <input type="text" id="tool-search" class="w-full border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                placeholder="Search tools...">
+                            <button id="add-tool-btn" class="bg-blue-600 text-white px-3 py-2 rounded-r-lg hover:bg-blue-700 transition">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        
+                        <div id="tools-container" class="max-h-[500px] overflow-y-auto pr-2">
+                            <!-- Tool cards will be inserted here dynamically -->
+                            <div class="animate-pulse space-y-4">
+                                <div class="h-24 bg-gray-200 rounded-lg"></div>
+                                <div class="h-24 bg-gray-200 rounded-lg"></div>
+                                <div class="h-24 bg-gray-200 rounded-lg"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-xl font-semibold mb-4 flex items-center">
+                            <i class="fas fa-lightbulb text-yellow-500 mr-3"></i>
+                            Example Commands
+                        </h2>
+                        <ul class="space-y-2 text-sm">
+                            <li class="cursor-pointer hover:text-blue-600 transition" onclick="fillChatInput('Scan example.com with Nuclei')">
+                                <i class="fas fa-angle-right text-blue-500 mr-2"></i> Scan example.com with Nuclei
+                            </li>
+                            <li class="cursor-pointer hover:text-blue-600 transition" onclick="fillChatInput('Run an Nmap scan on 192.168.1.1')">
+                                <i class="fas fa-angle-right text-blue-500 mr-2"></i> Run an Nmap scan on 192.168.1.1
+                            </li>
+                            <li class="cursor-pointer hover:text-blue-600 transition" onclick="fillChatInput('Check what technologies are used on example.com')">
+                                <i class="fas fa-angle-right text-blue-500 mr-2"></i> Check what technologies are used on example.com
+                            </li>
+                            <li class="cursor-pointer hover:text-blue-600 transition" onclick="fillChatInput('Use SQLMap on https://example.com/login.php')">
+                                <i class="fas fa-angle-right text-blue-500 mr-2"></i> Use SQLMap on https://example.com/login.php
+                            </li>
+                            <li class="cursor-pointer hover:text-blue-600 transition" onclick="fillChatInput('What is an SQL injection attack?')">
+                                <i class="fas fa-angle-right text-blue-500 mr-2"></i> What is an SQL injection attack?
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+            <div class="bg-white p-6 rounded-lg shadow-xl flex items-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-600 mr-3"></div>
+                <span id="loading-message">Loading...</span>
+            </div>
+        </div>
+        
+        <!-- Notification -->
+        <div id="notification" class="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg p-4 transform translate-y-full transition-transform duration-300 opacity-0 flex items-start max-w-md">
+            <div id="notification-icon-container" class="mr-3 flex-shrink-0 mt-1">
+                <i id="notification-icon" class="fas fa-check-circle text-green-500 text-xl"></i>
+            </div>
+            <div>
+                <h3 id="notification-title" class="font-semibold text-gray-900">Success</h3>
+                <p id="notification-message" class="text-gray-600">Operation completed successfully.</p>
+            </div>
+            <button class="ml-4 text-gray-400 hover:text-gray-600" onclick="dismissNotification()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="js/chat-tools.js"></script>
+</body>
+</html>

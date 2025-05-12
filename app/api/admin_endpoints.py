@@ -1,3 +1,9 @@
+"""
+API Endpoints for Admin Panel
+
+This module provides endpoints for managing training data, checking model status, and triggering model training.
+"""
+
 from fastapi import APIRouter, Header, HTTPException
 from pydantic import BaseModel, HttpUrl
 from typing import List, Optional
@@ -6,6 +12,9 @@ import os
 from datetime import datetime
 from app.ml.training_engine import engine
 from app.utils.logger import log_error, log_info
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+from html import escape
 
 router = APIRouter()
 
@@ -38,26 +47,47 @@ def save_training_data(entries):
     with open("data/training_data.json", "w") as f:
         json.dump(entries, f, indent=4)
 
-@router.post("/training-data")
+@router.post("/training-data", summary="Add Training Data", description="Add a new training data entry for model training.")
 async def add_training_data(
     entry: TrainingEntry,
     x_admin_token: str = Header(None)
 ):
+    """
+    Add a new training data entry.
+
+    - **entry**: Training data entry details (title, description, writeup links, etc.)
+    - **x_admin_token**: Admin token for authentication
+
+    Returns:
+    - Success message if the entry is added successfully.
+    """
     if x_admin_token != ADMIN_TOKEN:
         raise HTTPException(status_code=401, detail="Unauthorized access")
 
     try:
+        # Sanitize inputs to prevent XSS
+        entry.title = escape(entry.title)
+        entry.description = escape(entry.description)
+
         entries = load_training_data()
-        entries.append(entry.dict())
+        entries.append(jsonable_encoder(entry))
         save_training_data(entries)
-        return {"status": "success", "message": "Training data entry added successfully"}
+        return JSONResponse(content={"status": "success", "message": "Training data entry added successfully"})
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error adding training data: {str(e)}")
 
-@router.get("/training-data")
+@router.get("/training-data", summary="Get Training Data", description="Retrieve all training data entries.")
 async def get_training_data(
     x_admin_token: str = Header(None)
 ):
+    """
+    Retrieve all training data entries.
+
+    - **x_admin_token**: Admin token for authentication
+
+    Returns:
+    - List of training data entries.
+    """
     if x_admin_token != ADMIN_TOKEN:
         raise HTTPException(status_code=401, detail="Unauthorized access")
 

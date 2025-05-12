@@ -1,0 +1,10 @@
+{
+  "web_vulnerabilities": "ft:gpt-4o-2024-08-06:personal::BWAukKEO",
+  "network_security": "ft:gpt-4o-2024-08-06:personal::BWAukKEO",
+  "mobile_security": "ft:gpt-4o-2024-08-06:personal::BWAukKEO",
+  "cloud_security": "ft:gpt-4o-2024-08-06:personal::BWAukKEO",
+  "iot_security": "ft:gpt-4o-2024-08-06:personal::BWAukKEO",
+  "tools_model": "ft:gpt-4o-2024-08-06:personal::BWAukKEO",
+  "default": "ft:gpt-4o-2024-08-06:personal::BWAukKEO",
+  "last_updated": "2025-05-12 04:40:00"
+}
