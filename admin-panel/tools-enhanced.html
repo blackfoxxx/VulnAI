@@ -8,30 +8,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body class="bg-gray-50 font-[Inter]">
+<body class="bg-gray-50 font-sans">
     <div class="min-h-screen">
         <!-- Header with Background Image -->
-        <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white relative overflow-hidden">
+        <header class="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white relative overflow-hidden">
             <div class="absolute inset-0 bg-black opacity-50"></div>
             <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/3184290/pexels-photo-3184290.jpeg')"></div>
             <div class="container mx-auto px-6 py-12 relative z-10">
                 <h1 class="text-4xl font-bold mb-3">Tools Management</h1>
-                <p class="text-blue-100 text-lg max-w-2xl">Install and manage security tools and wordlists with our enhanced interface. Search, filter, and manage your tools efficiently.</p>
+                <p class="text-indigo-100 text-lg max-w-2xl">Install and manage security tools and wordlists with our enhanced interface. Search, filter, and manage your tools efficiently.</p>
             </div>
         </header>
 
         <!-- Navigation -->
-        <nav class="bg-blue-900 p-4 shadow-md">
+        <nav class="bg-white shadow-sm p-4">
             <div class="container mx-auto flex items-center justify-between">
-                <a href="index.html" class="text-white font-bold text-xl">VulnLearnAI Tools</a>
-                <button class="text-white md:hidden" id="menu-toggle">
+                <a href="index.html" class="text-indigo-600 font-bold text-xl">VulnLearnAI Dashboard</a>
+                <button class="text-gray-700 md:hidden" id="menu-toggle">
                     <i class="fas fa-bars"></i>
                 </button>
                 <div id="menu" class="hidden md:flex">
-                    <a href="index.html" class="text-blue-300 hover:text-white px-3">Dashboard</a>
-                    <a href="tools.html" class="text-blue-300 hover:text-white px-3">Tools</a>
-                    <a href="training.html" class="text-blue-300 hover:text-white px-3">Training</a>
-                    <a href="analysis.html" class="text-blue-300 hover:text-white px-3">Analysis</a>
+                    <a href="index.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Dashboard</a>
+                    <a href="tools.html" class="text-indigo-600 font-semibold border-b-2 border-indigo-500 px-3 py-2 rounded-md">Tools</a>
+                    <a href="training.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Training</a>
+                    <a href="analysis.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Analysis</a>
                 </div>
             </div>
         </nav>
@@ -40,17 +40,17 @@
         <main class="container mx-auto px-6 py-8">
             <!-- Install Tool Form -->
             <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
-                <h2 class="text-2xl font-semibold mb-6 flex items-center">
-                    <i class="fas fa-plus-circle text-blue-600 mr-3"></i>
+                <h2 class="text-2xl font-semibold mb-6 flex items-center text-gray-800">
+                    <i class="fas fa-plus-circle text-indigo-600 mr-3"></i>
                     Install New Tool
                 </h2>
                 <form id="tool-form" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <!-- Tool Selection -->
                         <div class="space-y-2">
-                            <label for="tool-name" class="block text-sm font-medium text-gray-700">Select Tool</label>
+                            <label for="tool-name" class="block text-sm font-medium text-gray-700 mb-1">Select Tool</label>
                             <select id="tool-name" name="tool-name" required
-                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-shadow">
+                                class="w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm transition-shadow">
                                 <option value="">Loading tools...</option>
                             </select>
                             <p class="text-sm text-gray-500">
@@ -61,11 +61,11 @@
 
                         <!-- Git Repository -->
                         <div class="space-y-2">
-                            <label for="git-repo" class="block text-sm font-medium text-gray-700">Git Repository URL</label>
+                            <label for="git-repo" class="block text-sm font-medium text-gray-700 mb-1">Git Repository URL</label>
                             <div class="relative">
                                 <i class="fas fa-code-branch absolute left-3 top-3 text-gray-400"></i>
                                 <input type="url" id="git-repo" name="git-repo"
-                                    class="w-full pl-10 rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-shadow"
+                                    class="w-full pl-10 pr-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm transition-shadow"
                                     placeholder="https://github.com/user/repo">
                             </div>
                         </div>
@@ -73,16 +73,16 @@
 
                     <!-- Install Commands -->
                     <div class="space-y-2">
-                        <label for="install-commands" class="block text-sm font-medium text-gray-700">Install Commands</label>
+                        <label for="install-commands" class="block text-sm font-medium text-gray-700 mb-1">Install Commands</label>
                         <div class="flex space-x-4">
                             <div class="relative flex-grow">
                                 <i class="fas fa-terminal absolute left-3 top-3 text-gray-400"></i>
                                 <input type="text" id="install-commands" name="install-commands"
-                                    class="w-full pl-10 rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-shadow"
+                                    class="w-full pl-10 pr-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm transition-shadow"
                                     placeholder="pip install -r requirements.txt">
                             </div>
                             <button type="button" id="add-command" 
-                                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors flex items-center">
+                                class="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors flex items-center shadow-md">
                                 <i class="fas fa-plus mr-2"></i>
                                 Add Command
                             </button>
@@ -93,7 +93,7 @@
                     <!-- Submit Button -->
                     <div class="flex justify-end">
                         <button type="submit"
-                            class="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors flex items-center text-lg">
+                            class="px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 flex items-center text-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                             <i class="fas fa-download mr-2"></i>
                             Install Tool
                         </button>
@@ -126,14 +126,14 @@
     <!-- Loading Overlay -->
     <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white p-8 rounded-xl shadow-xl flex items-center space-x-4">
-            <div class="animate-spin rounded-full h-8 w-8 border-4 border-blue-600 border-t-transparent"></div>
+            <div class="animate-spin rounded-full h-8 w-8 border-4 border-indigo-600 border-t-transparent"></div>
             <span class="text-lg font-medium" id="loading-message">Installing tool...</span>
         </div>
     </div>
 
     <!-- Notification Component -->
     <div id="notification" class="fixed bottom-4 right-4 transform transition-transform duration-300 translate-y-full z-50">
-        <div class="flex items-center space-x-4 p-4 rounded-lg shadow-lg max-w-md">
+        <div class="flex items-center space-x-4 p-4 rounded-xl shadow-2xl max-w-md bg-white">
             <i id="notification-icon" class="fas fa-check-circle text-2xl"></i>
             <div class="flex-grow">
                 <h4 id="notification-title" class="font-medium"></h4>
@@ -147,25 +147,25 @@
 
     <!-- Confirmation Modal -->
     <div id="confirm-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white p-6 rounded-xl shadow-xl max-w-md w-full mx-4">
+        <div class="bg-white p-8 rounded-xl shadow-xl max-w-md w-full mx-4">
             <h3 class="text-xl font-semibold mb-4" id="confirm-title">Confirm Action</h3>
             <p class="text-gray-600 mb-6" id="confirm-message"></p>
             <div class="flex justify-end space-x-4">
                 <button onclick="hideConfirmModal()" 
-                    class="px-4 py-2 text-gray-600 hover:text-gray-800 focus:outline-none">
+                    class="px-6 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Cancel
                 </button>
                 <button id="confirm-action"
-                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 font-medium shadow-md">
                     Confirm
                 </button>
             </div>
         </div>
     </div>
 
-    <footer class="bg-gray-800 text-white p-4 mt-8">
+    <footer class="bg-gray-800 text-white py-8 mt-8">
         <div class="container mx-auto text-center">
-            <p>&copy; 2025 VulnLearnAI. All rights reserved.</p>
+            <p class="text-gray-400">&copy; 2025 VulnLearnAI. All rights reserved.</p>
         </div>
     </footer>
 

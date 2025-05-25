@@ -11,37 +11,37 @@
   />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
-  <nav class="bg-blue-900 p-4 shadow-md">
+<body class="bg-gray-50 font-sans leading-normal tracking-normal">
+  <nav class="bg-white shadow-sm p-4">
     <div class="container mx-auto flex items-center justify-between">
-      <a href="index.html" class="text-white font-bold text-xl">VulnLearnAI Training</a>
-      <button class="text-white md:hidden" id="menu-toggle">
+      <a href="index.html" class="text-indigo-600 font-bold text-xl">VulnLearnAI Dashboard</a>
+      <button class="text-gray-700 md:hidden" id="menu-toggle">
         <i class="fas fa-bars"></i>
       </button>
       <div id="menu" class="hidden md:flex">
-        <a href="index.html" class="text-blue-300 hover:text-white px-3">Dashboard</a>
-        <a href="tools.html" class="text-blue-300 hover:text-white px-3">Tools</a>
-        <a href="training.html" class="text-blue-300 hover:text-white px-3">Training</a>
-        <a href="analysis.html" class="text-blue-300 hover:text-white px-3">Analysis</a>
+        <a href="index.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Dashboard</a>
+        <a href="tools.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Tools</a>
+        <a href="training.html" class="text-indigo-600 font-semibold border-b-2 border-indigo-500 px-3 py-2 rounded-md">Training</a>
+        <a href="analysis.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Analysis</a>
       </div>
     </div>
   </nav>
 
   <main class="container mx-auto mt-8 p-4 max-w-4xl">
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center justify-between mb-10">
       <h1 class="text-3xl font-bold text-gray-800">Model Training</h1>
       <div id="model-status" class="text-sm text-gray-600"></div>
     </div>
 
     <!-- URL Input and Summary Section -->
-    <section class="bg-white rounded-lg shadow-lg p-6 mb-6">
-      <h2 class="text-xl font-semibold text-gray-800 mb-4">Add Training Data via URL</h2>
+    <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-6">Add Training Data via URL</h2>
       <div class="mb-4">
-        <label for="urlInput" class="block text-sm font-medium text-gray-700 mb-2">Enter URL to Summarize</label>
+        <label for="urlInput" class="block text-sm font-medium text-gray-700 mb-1">Enter URL to Summarize</label>
         <div class="flex gap-2">
           <input type="url" id="urlInput" value="" placeholder="https://example.com/article" 
-                 class="flex-1 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-          <button id="summarizeBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2">
+                 class="flex-1 w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent sm:text-sm transition-all duration-200">
+          <button id="summarizeBtn" class="px-6 py-3 text-base font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center space-x-2">
             <i class="fas fa-magic"></i>
             <span>Summarize</span>
           </button>
@@ -51,11 +51,11 @@
       <!-- Summary Display Section (Hidden by default) -->
       <div id="summarySection" class="mt-6 hidden">
         <h3 class="text-lg font-semibold mb-2">Generated Summary</h3>
-        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+        <div class="bg-gray-100 p-6 rounded-xl mb-6 shadow-inner">
           <p id="summaryText" class="text-gray-800 whitespace-pre-line"></p>
         </div>
         <div class="flex justify-end">
-          <button id="confirmBtn" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors duration-200 flex items-center space-x-2">
+          <button id="confirmBtn" class="px-6 py-3 text-base font-medium rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center space-x-2">
             <i class="fas fa-check"></i>
             <span>Use as Training Data</span>
           </button>
@@ -64,42 +64,42 @@
     </section>
 
     <!-- Training Status Card -->
-    <section class="bg-white rounded-lg shadow-lg p-6 mb-6">
-      <div class="flex items-center justify-between mb-4">
+    <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+      <div class="flex items-center justify-between mb-6">
         <h2 class="text-xl font-semibold text-gray-800">Model Status</h2>
         <span id="last-trained" class="text-sm text-gray-600"></span>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-        <div class="bg-gray-50 p-4 rounded-lg">
+        <div class="bg-white border border-gray-200 p-6 rounded-xl hover:shadow-md transition-shadow duration-300">
           <h3 class="text-sm font-medium text-gray-600 mb-2">Training Samples</h3>
-          <p id="training-samples" class="text-2xl font-bold text-gray-900">-</p>
+          <p id="training-samples" class="text-2xl font-bold text-indigo-700">-</p>
         </div>
-        <div class="bg-gray-50 p-4 rounded-lg">
+        <div class="bg-white border border-gray-200 p-6 rounded-xl hover:shadow-md transition-shadow duration-300">
           <h3 class="text-sm font-medium text-gray-600 mb-2">Validation Accuracy</h3>
-          <p id="validation-accuracy" class="text-2xl font-bold text-gray-900">-</p>
+          <p id="validation-accuracy" class="text-2xl font-bold text-indigo-700">-</p>
         </div>
-        <div class="bg-gray-50 p-4 rounded-lg">
+        <div class="bg-white border border-gray-200 p-6 rounded-xl hover:shadow-md transition-shadow duration-300">
           <h3 class="text-sm font-medium text-gray-600 mb-2">Model Status</h3>
-          <p id="model-loaded" class="text-2xl font-bold text-gray-900">-</p>
+          <p id="model-loaded" class="text-2xl font-bold text-indigo-700">-</p>
         </div>
       </div>
     </section>
 
     <!-- Training Control Card -->
-    <section class="bg-white rounded-lg shadow-lg p-6">
-      <h2 class="text-xl font-semibold mb-4 text-gray-800">Train AI Models</h2>
+    <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+      <h2 class="text-xl font-semibold mb-6 text-gray-800">Train AI Models</h2>
       <p class="mb-6 text-gray-600">
         Use this interface to train and evaluate AI models for vulnerability classification. 
         The model will be trained using the available training data and validated for accuracy.
       </p>
       <div class="flex items-center space-x-4">
-        <button id="train-btn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
+        <button id="train-btn" class="px-6 py-3 text-base font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
           <i class="fas fa-brain"></i>
           <span>Start Training</span>
         </button>
         <!-- Spinner -->
         <div id="spinner" class="hidden">
-          <i class="fas fa-circle-notch fa-spin text-blue-600 text-xl"></i>
+          <i class="fas fa-circle-notch fa-spin text-indigo-600 text-xl"></i>
         </div>
       </div>
       <!-- Status Messages -->
@@ -109,9 +109,9 @@
     </section>
   </main>
 
-  <footer class="bg-gray-800 text-white p-4 mt-8">
+  <footer class="bg-gray-800 text-white py-8 mt-8">
     <div class="container mx-auto text-center">
-      <p>&copy; 2025 VulnLearnAI. All rights reserved.</p>
+      <p class="text-gray-400">&copy; 2025 VulnLearnAI. All rights reserved.</p>
     </div>
   </footer>
 
@@ -139,10 +139,15 @@
 
     // Function to show status message
     function showStatus(message, type = 'info') {
-      statusDiv.classList.remove('hidden', 'bg-green-50', 'bg-red-50');
-      statusDiv.classList.add(type === 'error' ? 'bg-red-50' : 'bg-green-50');
-      statusDiv.querySelector('p').textContent = message;
       statusDiv.classList.remove('hidden');
+      statusDiv.querySelector('p').textContent = message;
+      if (type === 'error') {
+        statusDiv.className = 'mt-4 p-4 rounded-lg bg-red-50 text-red-700 border border-red-200';
+      } else if (type === 'success') {
+        statusDiv.className = 'mt-4 p-4 rounded-lg bg-green-50 text-green-700 border border-green-200';
+      } else { // info
+        statusDiv.className = 'mt-4 p-4 rounded-lg bg-blue-50 text-blue-700 border border-blue-200';
+      }
     }
 
     // Function to update model status

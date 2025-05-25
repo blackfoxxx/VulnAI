@@ -11,20 +11,20 @@
   />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
-  <nav class="bg-blue-900 p-4 shadow-md">
+<body class="bg-gray-50 font-sans leading-normal tracking-normal">
+  <nav class="bg-white shadow-sm p-4">
     <div class="container mx-auto flex items-center justify-between">
-      <a href="/" class="text-white font-bold text-xl">VulnLearnAI Chat</a>
+      <a href="index.html" class="text-indigo-600 font-bold text-xl">VulnLearnAI Chat</a>
       <div>
-        <a href="/" class="text-blue-300 hover:text-white px-3">Dashboard</a>
-        <a href="/admin" class="text-blue-300 hover:text-white px-3">Admin Panel</a>
+        <a href="index.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Dashboard</a>
+        <a href="index.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Admin Panel</a>
       </div>
     </div>
   </nav>
 
   <main class="container mx-auto mt-8 p-4 max-w-3xl">
-    <h1 class="text-3xl font-bold mb-6 text-gray-800">Chat with VulnLearnAI</h1>
-    <div id="chat-container" class="bg-white rounded shadow p-6 h-[400px] overflow-y-auto mb-4">
+    <h1 class="text-3xl font-bold mb-10 text-gray-800">Chat with VulnLearnAI</h1>
+    <div id="chat-container" class="bg-white rounded-xl shadow-lg p-6 h-[450px] overflow-y-auto mb-6">
       <!-- Chat messages will appear here -->
     </div>
     <form id="chat-form" class="flex">
@@ -32,19 +32,19 @@
         id="chat-input"
         type="text"
         placeholder="Type your message or command (e.g., 'Scan URL: example.com')"
-        class="flex-grow border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="flex-grow px-4 py-3 rounded-l-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 sm:text-sm"
         autocomplete="off"
       />
       <button
         type="submit"
-        class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700 transition"
+        class="px-6 py-3 rounded-r-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
       >
         Send
       </button>
     </form>
 
     <!-- Available Tools Section -->
-    <div class="bg-white rounded-lg shadow-lg p-6 mt-6 mb-8">
+    <div class="bg-white rounded-xl shadow-lg p-8 mt-8 mb-8">
       <h2 class="text-2xl font-semibold mb-4">Available Tools</h2>
       <p class="mb-4">You can use these tools directly in your chat by mentioning them. For example: "Scan the URL example.com for vulnerabilities" or "Run Nuclei on target.com"</p>
       <div id="available-tools" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -58,6 +58,12 @@
       </div>
     </div>
   </main>
+
+  <footer class="bg-gray-800 text-white py-8 mt-12">
+    <div class="container mx-auto text-center">
+        <p class="text-gray-400">&copy; 2025 VulnLearnAI. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script>
     const chatForm = document.getElementById('chat-form');
@@ -139,7 +145,7 @@
           appendMessage('VulnLearnAI', `I'm executing the ${data.tool_execution.tool_name} tool for you...`);
           
           const toolOutputElement = document.createElement('div');
-          toolOutputElement.className = 'tool-output bg-gray-100 p-3 rounded-lg my-2 text-sm font-mono overflow-auto max-h-64';
+          toolOutputElement.className = 'tool-output bg-gray-200 p-4 rounded-lg my-2 text-xs font-mono overflow-auto max-h-64 shadow-inner';
           toolOutputElement.innerHTML = `<strong>Tool:</strong> ${data.tool_execution.tool_name}<br>
                                         <strong>Output:</strong><br>${formatToolOutput(data.tool_execution.output)}`;
           chatContainer.appendChild(toolOutputElement);
